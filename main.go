@@ -49,21 +49,18 @@ func main() {
 }
 
 func findJavaHome(osName string) (string, error) {
+	if env := os.Getenv("JAVA_HOME"); len(env) > 0 {
+		return env, nil
+	}
+
 	switch osName {
 	case "darwin":
 		command := exec.Command("/usr/libexec/java_home")
-		if content, err := command.CombinedOutput(); err != nil {
-			return "", err
-		} else {
-			return string(bytes.TrimSpace(content)), nil
-		}
+		content, err := command.CombinedOutput()
+		return string(bytes.TrimSpace(content)), err
 
 	default:
-		if env := os.Getenv("JAVA_HOME"); len(env) == 0 {
-			return "", errors.New("no $JAVA_HOME")
-		} else {
-			return env, nil
-		}
+		return "", errors.New("no $JAVA_HOME")
 	}
 }
 

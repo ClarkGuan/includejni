@@ -3,7 +3,7 @@
 ## 安装
 
 ```bash
-go get -u github.com/ClarkGuan/includejni
+go install github.com/ClarkGuan/includejni@latest
 ```
 
 ## 使用
